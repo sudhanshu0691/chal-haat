@@ -6,7 +6,7 @@
 	<title>Space Comrades</title>
 	<link rel="stylesheet" href="/css/style.css" type="text/css">
 	<link rel="stylesheet" type="text/css" href="/css/mobile.css">
-	<script src="js/mobile.js" type="text/javascript"></script>
+	<script src="/js/mobile.js" type="text/javascript"></script>
 </head>
 <body>
 	<div id="page">
@@ -47,7 +47,11 @@
 					<img src="/images/satellite.png" alt="" class="satellite">
 					<h1>lunar image</h1>
 					<h2>enhancement</h2>
-			<a href="blog.html" class="more">upload image</a>    
+					<body>
+						<div class="drop-zone">
+						  <span class="drop-zone__prompt">Click to Upload</span>
+						  <input type="file" name="myFile" class="drop-zone__input">
+						</div>
 					<h3>Glimpse Gallery</h3>
 					<ul>
 						<li>
@@ -113,5 +117,73 @@
 			</div>
 		</div>
 	</div>
+
+	<Script>
+		document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
+	const dropZoneElement = inputElement.closest(".drop-zone");
+  
+	dropZoneElement.addEventListener("click", (e) => {
+	  inputElement.click();
+	});
+  
+	inputElement.addEventListener("change", (e) => {
+	  if (inputElement.files.length) {
+		updateThumbnail(dropZoneElement, inputElement.files[0]);
+	  }
+	});
+  
+	dropZoneElement.addEventListener("dragover", (e) => {
+	  e.preventDefault();
+	  dropZoneElement.classList.add("drop-zone--over");
+	});
+  
+	["dragleave", "dragend"].forEach((type) => {
+	  dropZoneElement.addEventListener(type, (e) => {
+		dropZoneElement.classList.remove("drop-zone--over");
+	  });
+	});
+  
+	dropZoneElement.addEventListener("drop", (e) => {
+	  e.preventDefault();
+  
+	  if (e.dataTransfer.files.length) {
+		inputElement.files = e.dataTransfer.files;
+		updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+	  }
+  
+	  dropZoneElement.classList.remove("drop-zone--over");
+	});
+  });
+  
+
+  function updateThumbnail(dropZoneElement, file) {
+	let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+  
+	if (dropZoneElement.querySelector(".drop-zone__prompt")) {
+	  dropZoneElement.querySelector(".drop-zone__prompt").remove();
+	}
+  
+	if (!thumbnailElement) {
+	  thumbnailElement = document.createElement("div");
+	  thumbnailElement.classList.add("drop-zone__thumb");
+	  dropZoneElement.appendChild(thumbnailElement);
+	}
+  
+	thumbnailElement.dataset.label = file.name;
+  
+	if (file.type.startsWith("image/")) {
+	  const reader = new FileReader();
+  
+	  reader.readAsDataURL(file);
+	  reader.onload = () => {
+		thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+	  };
+	} else {
+	  thumbnailElement.style.backgroundImage = null;
+	}
+  }
+  
+	</Script>
+
 </body>
 </html>  

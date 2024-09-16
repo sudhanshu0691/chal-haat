@@ -38,7 +38,7 @@ img {
 #header div {
 	margin: 0 auto;
 	max-width: 940px;
-	min-height: 60px;
+	min-height: 90px;
 	padding: 0 10px;
 }
 #header div a.logo {
@@ -73,7 +73,7 @@ img {
 	color: #ffffff;
 	display: block;
 	font-family: Arial;
-	font-size: 18px;
+	font-size: 19px;
 	font-weight: normal;
 	line-height: 59px;
 	margin: 0;
@@ -89,8 +89,7 @@ img {
 	color: #ffffff;
 }
 #header div ul li.selected a {
-	background-color: #000000;
-	color: #a3a3a3;
+	color: #ffffff;
 }
 #header div ul li.menu {
 	position: relative;
